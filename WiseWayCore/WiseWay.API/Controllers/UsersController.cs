@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WiseWay.Core;
 using WiseWay.Services;
@@ -34,16 +29,46 @@ namespace WiseWay.API.Controllers
             return Ok(users);
         }
 
-        [AllowAnonymous]
         [HttpPost("AddUpdateUser")]
         public IActionResult AddUser([FromBody]User model)
         {
             if (ModelState.IsValid)
-            {    
+            {
+                if (string.IsNullOrEmpty(model.PhoneNo) || string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName))
+                {
+                    return NotFound(new { message = "Phone No,First Name,Last Name are compulsory fields" });
+                }
                 var users = _userService.AddUpdateUser(model);
                 return Ok(users);
+
             }
             return BadRequest();
         }
+
+        [HttpGet("GetUserList")]
+        public string GetUserList()
+        {
+            string result = _userService.GetUserList();
+            if (string.IsNullOrEmpty(result))
+            {
+                return "{\"msg\":\"No data \"}";
+            }
+            return result;
+        }
+
+        [HttpGet("DeleteUser/{UserId}")]
+        public string DeleteUser(int UserId)
+        {
+            string result = _userService.DeleteUser(UserId);            
+            return result;
+        }
+
+        [HttpGet("ChangeUserStatus/{UserId}")]
+        public string ChangeUserStatus(int UserId)
+        {
+            string result = _userService.ChangeUserStatus(UserId);            
+            return result;
+        }
+
     }
 }

@@ -8,7 +8,10 @@ namespace WiseWay.Services
     {
         User Authenticate(User objuser);
         public User AddUpdateUser(User objModel);
-    }
+        public string GetUserList();
+        public string DeleteUser(int Id);
+        public string ChangeUserStatus(int Id);
+    }   
     public class UserService : IUserService
     {
         private readonly AppSettings _appSettings;
@@ -17,7 +20,6 @@ namespace WiseWay.Services
         {
             _appSettings = appSettings.Value;
         }
-
         public User Authenticate(User objuser)
         {
             return UserFacade.Authenticate(objuser, _appSettings.Secret, _appSettings.ExpiryDay);
@@ -25,6 +27,18 @@ namespace WiseWay.Services
         public User AddUpdateUser(User objuser)
         {
             return UserFacade.AddUpdateUser(objuser);
+        }
+        public string GetUserList()
+        {
+            return UserFacade.GetUserList();
+        }
+        public string DeleteUser(int Id)
+        {
+            return UserFacade.DeleteUser(Id);
+        }
+        public string ChangeUserStatus(int Id)
+        {
+            return UserFacade.ChangeUserStatus(Id);
         }
     }
 }

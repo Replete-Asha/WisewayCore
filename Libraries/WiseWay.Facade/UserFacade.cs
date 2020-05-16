@@ -87,7 +87,8 @@ namespace WiseWay.Facade
                         LastName = dataRow["LastName"].ToString(),
                         Email = dataRow["Email"].ToString(),
                         PhoneNo = dataRow["PhoneNo"].ToString(),
-                        Address = dataRow["Address"].ToString()                        
+                        Address = dataRow["Address"].ToString(),
+                        UserType = dataRow["UserType"].ToString()
                     };
                 }
                 catch (Exception)
@@ -117,6 +118,7 @@ namespace WiseWay.Facade
                         cmd.Parameters.AddWithValue("@Phone", objModel.PhoneNo);
                         cmd.Parameters.AddWithValue("@Email", objModel.Email);
                         cmd.Parameters.AddWithValue("@Address", objModel.Address);
+                        cmd.Parameters.AddWithValue("@UserType", objModel.UserType);
                         cmd.Parameters.AddWithValue("@ID", objModel.Id);
 
                         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
@@ -140,6 +142,92 @@ namespace WiseWay.Facade
             { tempUser.Msg = "User data added successfully"; }
             else { tempUser.Msg = "User data updated successfully"; }
             return tempUser;
+        }
+
+        public static string GetUserList()
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("usp_GetUserList", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                    sqlConnection.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    sqlConnection.Close();
+                }
+            }
+            string JSONresult = "{\"msg\":\"Data is not available\"}";
+            if (dataSet.Tables.Count > 0)
+            {
+                DataTable dt = dataSet.Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    JSONresult = "";
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        JSONresult += dt.Rows[i][0];
+                    }
+                }
+            }
+            return JSONresult;
+        }
+
+        public static string DeleteUser(int Id)
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_DeleteUser", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", Id);
+
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
+                    con.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    con.Close();
+                }
+            }
+            string JSONresult = "{\"msg\":\"User id is not available\"}";
+            if (dataSet.Tables.Count > 0)
+            {
+                DataTable dt = dataSet.Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    JSONresult = "{\"msg\":\"User Deleted Successfully.\"}";
+                }
+            }
+            return JSONresult;
+        }
+
+        public static string ChangeUserStatus(int Id)
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_ChangeUserStatus", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", Id);
+
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
+                    con.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    con.Close();
+                }
+            }
+            string JSONresult = "{\"msg\":\"User id is not available\"}";
+            if (dataSet.Tables.Count > 0)
+            {
+                DataTable dt = dataSet.Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    JSONresult = "{\"msg\":\"User status changed successfully.\"}";
+                }
+            }
+            return JSONresult;
         }
     }
 }
