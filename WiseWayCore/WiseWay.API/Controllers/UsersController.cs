@@ -33,5 +33,17 @@ namespace WiseWay.API.Controllers
 
             return Ok(users);
         }
+
+        [AllowAnonymous]
+        [HttpPost("AddUpdateUser")]
+        public IActionResult AddUser([FromBody]User model)
+        {
+            if (ModelState.IsValid)
+            {    
+                var users = _userService.AddUpdateUser(model);
+                return Ok(users);
+            }
+            return BadRequest();
+        }
     }
 }

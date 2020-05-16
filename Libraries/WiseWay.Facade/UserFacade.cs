@@ -67,6 +67,12 @@ namespace WiseWay.Facade
                 }
             }
             User loggedInUser = null;
+            loggedInUser = GetUserData(dataSet, loggedInUser);
+            return loggedInUser;
+        }
+
+        private static User GetUserData(DataSet dataSet, User loggedInUser)
+        {
             if (dataSet.HasData())
             {
                 DataRow dataRow = dataSet.Tables[0].Rows[0];
@@ -79,7 +85,9 @@ namespace WiseWay.Facade
                         Password = dataRow["Password"].ToString(),
                         FirstName = dataRow["FirstName"].ToString(),
                         LastName = dataRow["LastName"].ToString(),
-                        Email = dataRow["Email"].ToString()
+                        Email = dataRow["Email"].ToString(),
+                        PhoneNo = dataRow["PhoneNo"].ToString(),
+                        Address = dataRow["Address"].ToString()                        
                     };
                 }
                 catch (Exception)
@@ -87,7 +95,51 @@ namespace WiseWay.Facade
                     Console.WriteLine("no data is present in database");
                 }
             }
+
             return loggedInUser;
+        }
+
+        public static User AddUpdateUser(User objModel)
+        {
+            DataSet dataSet = new DataSet();
+            User tempUser = new User();
+            using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_AddUpdateUser", con))
+                {
+                    try
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@UserName", objModel.UserName);
+                        cmd.Parameters.AddWithValue("@FirstName", objModel.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", objModel.LastName);
+                        cmd.Parameters.AddWithValue("@Password", objModel.Password);
+                        cmd.Parameters.AddWithValue("@Phone", objModel.PhoneNo);
+                        cmd.Parameters.AddWithValue("@Email", objModel.Email);
+                        cmd.Parameters.AddWithValue("@Address", objModel.Address);
+                        cmd.Parameters.AddWithValue("@ID", objModel.Id);
+
+                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
+                        con.Open();
+                        sqlDataAdapter.Fill(dataSet);
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                        if (ex.Message.Contains("Email_Users"))
+                        {
+                            tempUser.Msg = "Email already exist";
+                        }
+                        return tempUser;
+                    }
+                }
+            }           
+            tempUser = GetUserData(dataSet, tempUser);
+            if(objModel.Id==0)
+            { tempUser.Msg = "User data added successfully"; }
+            else { tempUser.Msg = "User data updated successfully"; }
+            return tempUser;
         }
     }
 }
