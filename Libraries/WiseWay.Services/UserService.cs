@@ -7,10 +7,11 @@ namespace WiseWay.Services
     public interface IUserService
     {
         User Authenticate(User objuser);
-        public User AddUpdateUser(User objModel);
+        public User AddUpdateUser(User user);
         public string GetUserList();
         public string DeleteUser(int Id);
-        public string ChangeUserStatus(int Id);
+        public string ChangeUserStatus(int Id,bool IsActive);
+        public  User GetUserDetailById(int UserId);
     }   
     public class UserService : IUserService
     {
@@ -36,9 +37,13 @@ namespace WiseWay.Services
         {
             return UserFacade.DeleteUser(Id);
         }
-        public string ChangeUserStatus(int Id)
+        public string ChangeUserStatus(int Id,bool IsActive)
         {
-            return UserFacade.ChangeUserStatus(Id);
+            return UserFacade.ChangeUserStatus(Id, IsActive);
+        }
+        public User GetUserDetailById(int UserId)
+        {
+            return UserFacade.GetUserDetailById(UserId);
         }
     }
 }

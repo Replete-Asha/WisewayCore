@@ -90,13 +90,17 @@ namespace WiseWay.Facade
                         Address = dataRow["Address"].ToString(),
                         UserType = dataRow["UserType"].ToString()
                     };
+                    loggedInUser.Msg = "Get user data successfully";
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("no data is present in database");
                 }
             }
-
+            else
+            {
+                loggedInUser.Msg = "Invalid user id";
+            }
             return loggedInUser;
         }
 
@@ -136,9 +140,9 @@ namespace WiseWay.Facade
                         return tempUser;
                     }
                 }
-            }           
+            }
             tempUser = GetUserData(dataSet, tempUser);
-            if(objModel.Id==0)
+            if (objModel.Id == 0)
             { tempUser.Msg = "User data added successfully"; }
             else { tempUser.Msg = "User data updated successfully"; }
             return tempUser;
@@ -202,7 +206,7 @@ namespace WiseWay.Facade
             return JSONresult;
         }
 
-        public static string ChangeUserStatus(int Id)
+        public static string ChangeUserStatus(int Id, bool IsActive)
         {
             DataSet dataSet = new DataSet();
             using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
@@ -210,8 +214,8 @@ namespace WiseWay.Facade
                 using (SqlCommand cmd = new SqlCommand("usp_ChangeUserStatus", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Id", Id);
-
+                    cmd.Parameters.AddWithValue("@UserId", Id);
+                    cmd.Parameters.AddWithValue("@IsActive", IsActive);
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
                     con.Open();
                     sqlDataAdapter.Fill(dataSet);
@@ -229,5 +233,26 @@ namespace WiseWay.Facade
             }
             return JSONresult;
         }
+
+        public static User GetUserDetailById(int UserId)
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("usp_GetUserById", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Id", UserId);
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                    sqlConnection.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    sqlConnection.Close();
+                }
+            }
+            User tempUser = new User();
+            tempUser = GetUserData(dataSet, tempUser);
+            return tempUser;
+        }
+
     }
 }

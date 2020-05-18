@@ -59,16 +59,21 @@ namespace WiseWay.API.Controllers
         [HttpGet("DeleteUser/{UserId}")]
         public string DeleteUser(int UserId)
         {
-            string result = _userService.DeleteUser(UserId);            
+            string result = _userService.DeleteUser(UserId);
             return result;
         }
 
-        [HttpGet("ChangeUserStatus/{UserId}")]
-        public string ChangeUserStatus(int UserId)
+        [HttpGet("ChangeUserStatus/{UserId}/{IsActive}")]
+        public string ChangeUserStatus(int UserId, bool IsActive)
         {
-            string result = _userService.ChangeUserStatus(UserId);            
+            string result = _userService.ChangeUserStatus(UserId, IsActive);
             return result;
         }
 
+        [HttpGet("GetUserDetailById/{UserId}")]
+        public User GetUserDetailById(int UserId)
+        {
+            return _userService.GetUserDetailById(UserId);
+        }
     }
 }
