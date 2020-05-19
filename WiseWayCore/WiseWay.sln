@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WiseWay.Services", "..\Libr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wiseway.WebAdmin", "Wiseway.WebAdmin\Wiseway.WebAdmin.csproj", "{431F9AA7-25DC-4E51-8583-49D5642C1459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiseWay.API", "WiseWay.API\WiseWay.API.csproj", "{B1D6CED5-79F6-45C3-8C51-B1DD7546EE88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WiseWay.API", "WiseWay.API\WiseWay.API.csproj", "{B1D6CED5-79F6-45C3-8C51-B1DD7546EE88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
