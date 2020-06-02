@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="UserName"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="text" asp-for="UserName" placeholder="User Name">
+                            <input class="form-control"  type="text" asp-for="UserName" placeholder="User Name">
                             <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="Password"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="password" asp-for="Password" placeholder="Password">
+                            <input class="form-control"  type="password" asp-for="Password" placeholder="Password">
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="FirstName"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="text" asp-for="FirstName" placeholder="First Name">
+                            <input class="form-control"  type="text" asp-for="FirstName" placeholder="First Name">
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="LastName"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="text" asp-for="LastName" placeholder="Last Name">
+                            <input class="form-control"  type="text" asp-for="LastName" placeholder="Last Name">
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="Email"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="email" asp-for="Email" placeholder="Email">
+                            <input class="form-control"  type="email" asp-for="Email" placeholder="Email">
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="PhoneNo"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="number" asp-for="PhoneNo" placeholder="Phone No.">
+                            <input class="form-control"  type="number" asp-for="PhoneNo" placeholder="Phone No.">
                             <span asp-validation-for="PhoneNo" class="text-danger"></span>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" asp-for="Address"></label>
                         <div class="col-md-9">
-                            <input class="form-control" id="text-input" type="text" asp-for="Address" placeholder="Address">
+                            <input class="form-control"  type="text" asp-for="Address" placeholder="Address">
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-sm btn-primary" type="submit"> Submit</button>
-            <button class="btn btn-sm btn-danger" type="button" onclick="location.href='@Url.Action("Create", "User")'"> Back to List</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="location.href='@Url.Action("Index", "User")'"> Back to List</button>
         </div>
     }
 </div>
