@@ -1,16 +1,17 @@
 ﻿@model WiseWay.Core.User
 
 @{
-    ViewData["Title"] = "Create";
-    ViewData["Name"] = "Add User";
+    ViewData["Title"] = "Edit";
+    ViewData["Name"] = "Edit User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card">
-    @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-horizontal" }))
     {
-        <div class="card-header"><strong>Create User</strong></div>
+        <div class="card-header"><strong>Update User</strong></div>
         <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group row">
@@ -101,3 +102,5 @@
         </div>
     }
 </div>
+
+
