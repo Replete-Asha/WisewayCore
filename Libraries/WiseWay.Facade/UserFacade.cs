@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
@@ -148,20 +149,42 @@ namespace WiseWay.Facade
             return tempUser;
         }
 
-        public static string GetUserList()
+        public static List<User> GetUsers()
         {
-            DataSet dataSet = new DataSet();
-            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            DataSet dataSet = userList(0);
+            List<User> User = new List<User>();
+            if (dataSet.Tables.Count > 0)
             {
-                using (SqlCommand sqlCommand = new SqlCommand("usp_GetUserList", sqlConnection))
+                foreach (DataRow dataRow in dataSet.Tables[0].Rows)
                 {
-                    sqlCommand.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
-                    sqlConnection.Open();
-                    sqlDataAdapter.Fill(dataSet);
-                    sqlConnection.Close();
+                    try
+                    {
+                        User objUser = new User()
+                        {
+                            Id = dataRow["UserId"].ToLong(),
+                            UserName = dataRow["UserName"].ToString(),
+                            Password = dataRow["Password"].ToString(),
+                            FirstName = dataRow["FirstName"].ToString(),
+                            LastName = dataRow["LastName"].ToString(),
+                            Email = dataRow["Email"].ToString(),
+                            PhoneNo = dataRow["PhoneNo"].ToString(),
+                            Address = dataRow["Address"].ToString(),
+                            UserType = dataRow["UserType"].ToString()
+                        };
+                        User.Add(objUser);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine("no data is present in database");
+                    }
                 }
             }
+            return User;
+        }
+        public static string GetUserList(int IsJsonFormat = 1)
+        {
+            DataSet dataSet = userList(IsJsonFormat);
             string JSONresult = "{\"msg\":\"Data is not available\"}";
             if (dataSet.Tables.Count > 0)
             {
@@ -176,6 +199,24 @@ namespace WiseWay.Facade
                 }
             }
             return JSONresult;
+        }
+
+        private static DataSet userList(int IsJsonFormat)
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("usp_GetUserList", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@IsJsonFormat", IsJsonFormat);
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                    sqlConnection.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    sqlConnection.Close();
+                }
+            }
+            return dataSet;
         }
 
         public static string DeleteUser(int Id)

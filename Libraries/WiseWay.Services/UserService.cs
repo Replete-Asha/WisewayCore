@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using WiseWay.Core;
 using WiseWay.Facade;
 
@@ -12,6 +13,7 @@ namespace WiseWay.Services
         public string DeleteUser(int Id);
         public string ChangeUserStatus(int Id,bool IsActive);
         public  User GetUserDetailById(int UserId);
+        public List<User> GetUsers();
     }   
     public class UserService : IUserService
     {
@@ -44,6 +46,10 @@ namespace WiseWay.Services
         public User GetUserDetailById(int UserId)
         {
             return UserFacade.GetUserDetailById(UserId);
+        }
+        public List<User> GetUsers()
+        {
+            return UserFacade.GetUsers();
         }
     }
 }
