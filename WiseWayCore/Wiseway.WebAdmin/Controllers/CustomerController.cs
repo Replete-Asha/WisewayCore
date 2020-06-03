@@ -68,7 +68,6 @@ namespace Wiseway.WebAdmin.Controllers
             ViewBag.Message = "Delete";
             TempData["Success"] = "Information deleted successfully!";
             return RedirectToAction("Index");
-        }
-
+        }        
     }
 }

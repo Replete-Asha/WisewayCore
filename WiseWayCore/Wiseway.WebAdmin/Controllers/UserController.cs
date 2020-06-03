@@ -34,7 +34,7 @@ namespace Wiseway.WebAdmin.Controllers
 
             SessionUserId = JsonConvert.SerializeObject(loginUser.Id);
             TempData.Keep("SessionUserId");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Dashboard", "Home");
         }
         public ActionResult Create()
         {

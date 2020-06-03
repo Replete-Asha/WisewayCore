@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  * CoreUI - Open Source Bootstrap Admin Template
  * @version v1.0.10
@@ -12667,3 +12667,29 @@ hr.transparent {
       float: left; }
   *[dir="rtl"] .callout-default {
     border-right-color: #536c79; }
+.bg-gradient-warning {
+    background: #f6960b !important;
+    background: linear-gradient(45deg,#f9b115 0%,#f6960b 100%) !important;
+    border-color: #f6960b !important;
+}
+.bg-gradient-danger {
+    background: #d93737 !important;
+    background: linear-gradient(45deg,#e55353 0%,#d93737 100%) !important;
+    border-color: #d93737 !important;
+}
+.bg-gradient-info {
+    background: #2982cc !important;
+    background: linear-gradient(45deg,#39f 0%,#2982cc 100%) !important;
+    border-color: #2982cc !important;
+}
+.bg-gradient-primary {
+    background: #1f1498 !important;
+    background: linear-gradient(45deg,#321fdb 0%,#1f1498 100%) !important;
+    border-color: #1f1498 !important;
+}
+.text-value-lg {
+    font-size: 1.3125rem;
+}
+[class^=text-value] {
+    font-weight: 600;
+}
