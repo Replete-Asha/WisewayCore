@@ -62,7 +62,7 @@ namespace Wiseway.WebAdmin.Controllers
             if (objModel == null)
             {
                 return NotFound();
-            }          
+            }
             return View(objModel);
         }
 
@@ -84,22 +84,11 @@ namespace Wiseway.WebAdmin.Controllers
             TempData["Success"] = "Information deleted successfully!";
             return RedirectToAction("Index");
         }
-
         public IActionResult Index()
         {
-            //var UserId = TempData["SessionUserId"].ToString();
-            //List<User> lst = new List<User>();
-            //lst = _userService.GetUsers();
-            //TempData.Keep("SessionUserId");
-            //return View(lst);
-
-            //return _userService.GetUserList();
-
             List<User> lst = new List<User>();
             lst = _userService.GetUsers();
             return View(lst);
         }
-
-
     }
 }

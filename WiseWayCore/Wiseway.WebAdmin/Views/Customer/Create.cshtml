@@ -1,0 +1,117 @@
+﻿@model WiseWay.Core.Customer
+@{
+    ViewData["Title"] = "Create";
+    ViewData["Name"] = "Add Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    @using (Html.BeginForm("Create", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="card-header"><strong>Create Customer</strong></div>
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="FirstName"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" asp-for="FirstName" placeholder="First Name">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="LastName"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" asp-for="LastName" placeholder="Last Name">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="Email"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="email" asp-for="Email" placeholder="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="PhoneNo"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="number" asp-for="PhoneNo" placeholder="Phone No.">
+                            <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="Area"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" asp-for="Area" placeholder="Area">
+                            <span asp-validation-for="Area" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="City"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" asp-for="City" placeholder="City">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="Address"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" asp-for="Address" placeholder="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="CustomerType"></label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="CustomerType" name="CustomerType" asp-for="CustomerType">
+                                <option value="Customer">Customer</option>
+                                <option value="Wholeseller">Wholeseller</option>
+                                <option value="Reseller">Reseller</option>
+                            </select>
+                            <span asp-validation-for="CustomerType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" asp-for="Password"></label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="password" asp-for="Password" placeholder="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-primary" type="submit"> Submit</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="location.href='@Url.Action("Index", "Customer")'"> Back to List</button>
+        </div>
+    }
+</div>

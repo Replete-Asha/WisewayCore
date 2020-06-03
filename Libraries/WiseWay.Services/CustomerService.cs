@@ -1,4 +1,5 @@
-﻿using WiseWay.Core;
+﻿using System.Collections.Generic;
+using WiseWay.Core;
 using WiseWay.Facade;
 
 namespace WiseWay.Services
@@ -10,6 +11,7 @@ namespace WiseWay.Services
         public Customer GetCustomerDetailById(int CustomerId);
         public string DeleteCustomer(int Id);
         public string GetCustomerTypeWiseCount();
+        public List<Customer> GetCustomers();
     }
     public class CustomerService : ICustomerService
     {
@@ -32,6 +34,10 @@ namespace WiseWay.Services
         public string GetCustomerTypeWiseCount()
         {
             return CustomerFacade.GetCustomerTypeWiseCount();
+        }
+        public  List<Customer> GetCustomers()
+        {
+            return CustomerFacade.GetCustomers();
         }
     }
 }

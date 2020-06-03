@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using WiseWay.Core;
@@ -83,21 +84,43 @@ namespace WiseWay.Facade
             }
             return customer;
         }
-
-        public static string GetCustomerList()
+        public static List<Customer> GetCustomers()
         {
-            DataSet dataSet = new DataSet();
-            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            DataSet dataSet = DsCustomerList(0);
+            List<Customer> Customer = new List<Customer>();
+            if (dataSet.Tables.Count > 0)
             {
-                using (SqlCommand sqlCommand = new SqlCommand("usp_GetCustomerList", sqlConnection))
+                foreach (DataRow dataRow in dataSet.Tables[0].Rows)
                 {
-                    sqlCommand.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
-                    sqlConnection.Open();
-                    sqlDataAdapter.Fill(dataSet);
-                    sqlConnection.Close();
+                    try
+                    {
+                        Customer objCustomer = new Customer()
+                        {
+                            Id = dataRow["Id"].ToLong(),
+                            Password = dataRow["Password"].ToString(),
+                            FirstName = dataRow["FirstName"].ToString(),
+                            LastName = dataRow["LastName"].ToString(),
+                            Email = dataRow["Email"].ToString(),
+                            PhoneNo = dataRow["PhoneNo"].ToString(),
+                            Address = dataRow["Address"].ToString(),
+                            Area = dataRow["Area"].ToString(),
+                            City = dataRow["City"].ToString(),
+                            CustomerType = dataRow["CustomerType"].ToString()
+                        };
+                        Customer.Add(objCustomer);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine("no data is present in database");
+                    }
                 }
             }
+            return Customer;
+        }
+        public static string GetCustomerList(int IsJsonFormat = 1)
+        {
+            DataSet dataSet = DsCustomerList(IsJsonFormat);
             string JSONresult = "{\"msg\":\"Data is not available\"}";
             if (dataSet.Tables.Count > 0)
             {
@@ -112,6 +135,24 @@ namespace WiseWay.Facade
                 }
             }
             return JSONresult;
+        }
+
+        private static DataSet DsCustomerList(int IsJsonFormat)
+        {
+            DataSet dataSet = new DataSet();
+            using (SqlConnection sqlConnection = new SqlConnection(DBUtil.ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("usp_GetCustomerList", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@IsJsonFormat", IsJsonFormat);
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                    sqlConnection.Open();
+                    sqlDataAdapter.Fill(dataSet);
+                    sqlConnection.Close();
+                }
+            }
+            return dataSet;
         }
 
         public static Customer GetCustomerDetailById(int CustomerId)
